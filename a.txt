@@ -1,0 +1,28 @@
+docker volume create fastapi-db
+
+
+cd server1
+docker build -t shopping-server1:v1 .
+docker run -d --name server1 -p 8001:8000 -v fastapi-db:/app/db shopping-server1:v1
+
+cd ../server2
+docker build -t shopping-server2:v1 .
+# Linux / WSL / Git Bash
+docker run -d --name server2 -p 8002:8000 -v fastapi-db:/app/db -v ${PWD}/data:/app/data shopping-server2:v1
+
+# PowerShell
+docker run -d --name server2 -p 8002:8000 -v fastapi-db:/app/db -v "$(PWD)/data:/app/data" shopping-server2:v1
+
+
+http://localhost:8001/items
+
+
+http://localhost:8001/docs
+
+
+http://localhost:8002/docs
+
+
+docker volume rm fastapi-db
+
+docker volume create fastapi-db
