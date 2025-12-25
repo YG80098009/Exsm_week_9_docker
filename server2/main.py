@@ -8,11 +8,8 @@ BACKUP_PATH = "/app/data/backup_shopping_list.json"
 
 @app.get("/items")
 def get_items():
-    try:
-        with open(DB_PATH, "r") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
+    with open(DB_PATH, "r") as f:
+        return json.load(f)
 
 @app.post("/items")
 def add_item(name: str, amount: int):
